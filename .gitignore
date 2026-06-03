@@ -1,0 +1,10 @@
+# Ignore large media and docs
+*.mp4
+*.docx
+*.pdf
+
+# Ignore node_modules (already ignored in subdirs usually, but just in case)
+node_modules/
+
+# Ignore environment variables
+.env
