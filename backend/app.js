@@ -49,6 +49,17 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+/* ── Seed endpoint temporaire pour ajouter les données ── */
+app.get('/seed', async (req, res) => {
+  try {
+    const seed = require('./seed');
+    const result = await seed();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 /* ── Routes ── */
 app.use('/auth',    authRoutes);
 app.use('/messages', messageRoutes);

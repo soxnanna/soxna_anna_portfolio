@@ -165,7 +165,7 @@ const certificationsDemo = [
 
 const seedDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI);
     console.log('🚀 Connexion à MongoDB pour le seeding...');
 
     const deletedProjects = await Projet.deleteMany({});
@@ -188,11 +188,16 @@ const seedDB = async () => {
     await User.create({ email: 'soxnanna@gmail.com', password: 'Passer@1' });
     console.log('👤 Admin créé : soxnanna@gmail.com / Passer@1');
 
-    process.exit();
+    return { success: true, projects: insertedProjects.length, certifications: insertedCerts.length };
   } catch (error) {
     console.error('❌ Erreur :', error);
-    process.exit(1);
+    return { success: false, error: error.message };
   }
 };
 
-seedDB();
+// Exécuter seulement si appelé directement
+if (require.main === module) {
+  seedDB().then(() => process.exit(0)).catch(() => process.exit(1));
+}
+
+module.exports = seedDB;
