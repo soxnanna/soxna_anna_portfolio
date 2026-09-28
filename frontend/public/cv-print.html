@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV — Anna Keita (Version Impression)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #4f46e5;
+      --primary-light: #ede9fe;
+      --dark:          #1e1b4b;
+      --text:          #1f2937;
+      --muted:         #6b7280;
+      --border:        #d1d5db;
+      --white:         #ffffff;
+      --sidebar-bg:    #f3f4f6;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e5e7eb;
+      color: var(--text);
+      font-size: 8.5pt;
+      line-height: 1.4;
+    }
+
+    /* ── PAGE ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 63mm 1fr;
+    }
+
+    /* ══════════════════════
+       SIDEBAR CLAIRE
+    ══════════════════════ */
+    .sidebar {
+      background: var(--sidebar-bg);
+      border-right: 2px solid var(--border);
+      color: var(--text);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .profile-block { text-align: center; }
+    .avatar-wrap {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      margin: 0 auto 8px;
+      overflow: hidden;
+    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 10%; }
+    .profile-block h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 13pt;
+      color: var(--dark);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .profile-block .title-role {
+      font-size: 6.5pt;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .s-title {
+      font-size: 6.5pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      border-bottom: 1.5px solid var(--primary);
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .contact-list li { display: flex; align-items: flex-start; gap: 6px; font-size: 7.5pt; color: var(--text); }
+    .contact-list .icon { font-size: 9pt; flex-shrink: 0; margin-top: 1px; }
+    .contact-list a { color: var(--primary); text-decoration: none; word-break: break-all; }
+
+    .lang-row { display: flex; align-items: center; margin-bottom: 4px; }
+    .lang-name { font-size: 8pt; color: var(--text); }
+
+    .soft-list { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .soft-list li { font-size: 7.5pt; color: var(--text); padding-left: 10px; position: relative; }
+    .soft-list li::before { content: '▸'; color: var(--primary); position: absolute; left: 0; }
+
+    .cert-item { margin-bottom: 5px; }
+    .cert-item .cert-name { font-size: 7.5pt; font-weight: 600; color: var(--dark); }
+    .cert-item .cert-org  { font-size: 7pt; color: var(--muted); }
+
+    /* ══════════════════════
+       MAIN
+    ══════════════════════ */
+    .main {
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--white);
+    }
+
+    .m-title {
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .m-title::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: var(--primary-light);
+    }
+
+    .objectif-text {
+      font-size: 7.8pt;
+      color: var(--text);
+      line-height: 1.5;
+      background: var(--primary-light);
+      border-left: 3px solid var(--primary);
+      padding: 7px 10px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .edu-item { margin-bottom: 5px; }
+    .edu-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .edu-degree { font-size: 8pt; font-weight: 600; color: var(--dark); }
+    .edu-date   { font-size: 7pt; color: var(--primary); font-weight: 500; white-space: nowrap; }
+    .edu-school { font-size: 7pt; color: var(--muted); margin-top: 1px; }
+
+    .skills-grid { display: flex; flex-direction: column; gap: 4px; }
+    .skill-row { display: flex; }
+    .skill-cat {
+      font-size: 7pt; font-weight: 700;
+      color: var(--primary);
+      min-width: 95px; padding-right: 6px; flex-shrink: 0;
+    }
+    .skill-val { font-size: 7pt; color: var(--text); }
+
+    .project-item {
+      border-left: 2px solid var(--border);
+      padding-left: 8px;
+      margin-bottom: 5px;
+    }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .project-name { font-size: 7.8pt; font-weight: 700; color: var(--dark); }
+    .project-org  { font-size: 7pt; color: var(--primary); font-weight: 500; white-space: nowrap; margin-left: 6px; flex-shrink: 0; }
+    .project-tech {
+      display: inline-block; font-size: 6.5pt;
+      color: var(--primary); background: var(--primary-light);
+      border-radius: 3px; padding: 1px 5px; margin: 2px 0 3px;
+    }
+    .project-bullets { list-style: none; padding: 0; }
+    .project-bullets li {
+      font-size: 7.3pt; color: var(--text);
+      padding-left: 10px; position: relative; margin-bottom: 1px;
+    }
+    .project-bullets li::before {
+      content: '•'; color: var(--primary);
+      position: absolute; left: 0; font-weight: 700;
+    }
+
+    @media print {
+      @page { margin: 0; size: A4; }
+      body { background: #fff; }
+      .page { width: 210mm; height: 297mm; max-height: 297mm; overflow: hidden; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="profile-block">
+      <div class="avatar-wrap">
+        <img src="profile.jpg" alt="Anna Keita" />
+      </div>
+      <h1>Anna Keita</h1>
+      <div class="title-role">Administratrice Systèmes &amp; Réseaux<br/>Cloud &amp; DevOps</div>
+    </div>
+
+    <div>
+      <div class="s-title">Contact</div>
+      <ul class="contact-list">
+        <li><span class="icon">📞</span> 77 682 20 42</li>
+        <li><span class="icon">✉️</span> <a href="mailto:soxnanna@gmail.com">soxnanna@gmail.com</a></li>
+        <li><span class="icon">📍</span> Dakar, Sénégal</li>
+        <li><span class="icon">🔗</span> <a href="https://linkedin.com/in/anna-keita-1a83052aa">linkedin.com/in/anna-keita-1a83052aa</a></li>
+        <li><span class="icon">💻</span> <a href="https://github.com/soxnanna">github.com/soxnanna</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="s-title">Langues</div>
+      <div class="lang-row"><span class="lang-name">Français</span></div>
+      <div class="lang-row"><span class="lang-name">Wolof</span></div>
+    </div>
+
+    <div>
+      <div class="s-title">Savoir-être</div>
+      <ul class="soft-list">
+        <li>Rigueur &amp; Autonomie</li>
+        <li>Esprit d'analyse</li>
+        <li>Travail en équipe</li>
+        <li>Résolution de problèmes</li>
+        <li>Adaptabilité</li>
+        <li>Curiosité technique</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="s-title">Certifications</div>
+      <div class="cert-item">
+        <div class="cert-name">AWS Certified Cloud Practitioner</div>
+        <div class="cert-org">Amazon Web Services — 2026</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">CCNA 1, 2, 3</div>
+        <div class="cert-org">Cisco Networking Academy — 2026</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Linux Essentials</div>
+        <div class="cert-org">NDG / LPI</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <section>
+      <div class="m-title">Objectif</div>
+      <p class="objectif-text">
+        Étudiante en fin de Licence Administration Systèmes &amp; Réseaux (ISI Dakar), formée au Cloud et DevOps à l'Orange Digital Center. Je cherche une première expérience où mettre en pratique mes compétences en infrastructure cloud, automatisation et supervision — dans une équipe technique exigeante.
+      </p>
+    </section>
+
+    <section>
+      <div class="m-title">Formation</div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-degree">Licence Administration Systèmes &amp; Réseaux</span>
+          <span class="edu-date">En cours</span>
+        </div>
+        <div class="edu-school">Institut Supérieur d'Informatique (ISI) — Dakar</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-degree">Parcours Cloud &amp; DevOps</span>
+          <span class="edu-date">Fév. – Juil. 2026</span>
+        </div>
+        <div class="edu-school">Orange Digital Center (ODC) — Dakar · AWS, Docker, Kubernetes, Terraform, Jenkins, SonarQube</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-degree">Informatique &amp; Développement d'Applications</span>
+          <span class="edu-date">En cours</span>
+        </div>
+        <div class="edu-school">UNCHK — Sénégal</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="m-title">Compétences Techniques</div>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <span class="skill-cat">Systèmes &amp; Virt.</span>
+          <span class="skill-val">Linux, Windows Server, VMware, Docker, Kubernetes</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Cloud &amp; DevOps</span>
+          <span class="skill-val">AWS (EC2, IAM, S3, RDS, VPC, Lambda, CloudWatch), Terraform, Jenkins, SonarQube, Git, Bash, PowerShell</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Sécurité</span>
+          <span class="skill-val">Trivy, Firewall, Durcissement Linux, IaC Scan, DevSecOps</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Réseaux</span>
+          <span class="skill-val">TCP/IP, VLAN, Routage inter-VLAN, Active Directory, LDAP, GPO, Cisco IOS</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Supervision</span>
+          <span class="skill-val">Prometheus, Grafana, Alerting, DNS, DHCP, Nginx</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Développement</span>
+          <span class="skill-val">MongoDB, Express.js, React.js, Node.js, JavaScript, HTML, CSS, Tailwind CSS, API REST</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="m-title">Projets &amp; Réalisations</div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Architecture Fullstack &amp; Supervision Cloud Native</span>
+          <span class="project-org">Orange Digital Center</span>
+        </div>
+        <span class="project-tech">Docker Compose · Nginx · Prometheus · Grafana · Debian</span>
+        <ul class="project-bullets">
+          <li>Déploiement Full Stack (React, Node.js, MongoDB) sur Debian avec Docker Compose et reverse proxy Nginx.</li>
+          <li>Stack de supervision Prometheus/Grafana avec alerting et durcissement sécurité Linux.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Orchestration de Conteneurs : Docker &amp; Kubernetes (EKS)</span>
+          <span class="project-org">Orange Digital Center</span>
+        </div>
+        <span class="project-tech">Docker · Kubernetes · Amazon EKS · Cloud Native</span>
+        <ul class="project-bullets">
+          <li>Images Docker optimisées avec builds multi-étapes pour réduire la surface d'attaque.</li>
+          <li>Orchestration sur Amazon EKS : namespaces, services et autoscaling.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Automatisation d'Infrastructure (IaC &amp; CI/CD)</span>
+          <span class="project-org">Orange Digital Center</span>
+        </div>
+        <span class="project-tech">Terraform · Jenkins · SonarQube · AWS (VPC, EC2, S3) · Bash</span>
+        <ul class="project-bullets">
+          <li>Provisionnement AWS (VPC, EC2, S3) avec Terraform et scripts Bash d'administration.</li>
+          <li>Pipeline CI/CD Jenkins end-to-end avec analyse qualité SonarQube.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Audit de Sécurité Automatisé avec Trivy</span>
+          <span class="project-org">Orange Digital Center</span>
+        </div>
+        <span class="project-tech">Trivy · Docker Security · IaC Scan · DevSecOps</span>
+        <ul class="project-bullets">
+          <li>Scans de vulnérabilités sur images Docker et configurations Terraform.</li>
+          <li>Intégration dans la chaîne CI/CD pour détection proactive des failles.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Intégration de l'IA pour la Gestion Réseau (AIOps)</span>
+          <span class="project-org">Mémoire de Licence — ISI</span>
+        </div>
+        <span class="project-tech">AWS · Terraform · Docker Compose · Prometheus · Grafana · Alertmanager · SNMP · Python · Isolation Forest · Flask</span>
+        <ul class="project-bullets">
+          <li>Infrastructure AWS via Terraform ; 7 services de supervision conteneurisés avec Docker Compose.</li>
+          <li>Module Python Isolation Forest : détection d'anomalies réseau toutes les 60s avec rapports automatiques et webhook Flask.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Gouvernance des Identités, Services Réseau &amp; Messagerie</span>
+          <span class="project-org">ISI</span>
+        </div>
+        <span class="project-tech">OpenLDAP · Active Directory · GPO · DNS/DHCP · Cisco IOS · VLAN · Exchange Server · SSL</span>
+        <ul class="project-bullets">
+          <li>Administration OpenLDAP et Active Directory (utilisateurs, groupes, GPO) ; déploiement Exchange Server avec SSL.</li>
+          <li>Configuration DNS/DHCP et segmentation multi-VLAN avec routage inter-VLAN sur Cisco.</li>
+        </ul>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <span class="project-name">Application Web Full Stack MERN — Portfolio</span>
+          <span class="project-org">Orange Digital Center</span>
+        </div>
+        <span class="project-tech">MongoDB · Express.js · React.js · Node.js · JWT · Tailwind CSS</span>
+        <ul class="project-bullets">
+          <li>API REST Node.js/Express sécurisée par JWT et CORS avec persistance MongoDB.</li>
+          <li>Interface React responsive (Tailwind CSS) avec CRUD complet et gestion des rôles admin.</li>
+        </ul>
+      </div>
+
+    </section>
+  </main>
+</div>
+</body>
+</html>

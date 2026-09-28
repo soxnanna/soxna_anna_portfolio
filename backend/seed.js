@@ -5,103 +5,119 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const mongoose = require('mongoose');
-const Projet = require('./models/projetModel');
+const Projet        = require('./models/projetModel');
 const Certification = require('./models/certificationModel');
-const User   = require('./models/userModel');
+const User          = require('./models/userModel');
 
 const projetsDemo = [
-  // --- PROJETS ODC --- (7 Projets "En cours")
+
+  // ════════════════════════════════════════════
+  // ODC — Orange Digital Center  (5 projets)
+  // ════════════════════════════════════════════
+
   {
-    libelle     : 'Projet Fil Rouge : Architecture Portfolio Fullstack (MERN)',
+    libelle     : 'Architecture Fullstack & Supervision Cloud Native',
     image       : 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&auto=format&fit=crop',
-    description : 'Conception intégrale d\'une plateforme web dynamique pour la gestion de carrière. Côté Frontend, utilisation de React JS avec une gestion d\'état via les Hooks et un routage fluide pour une expérience SPA optimale. Côté Backend, développement d\'une API REST sous Node.js et Express sécurisée par JWT et CORS. La persistance des données est assurée par MongoDB, avec une modélisation rigoureuse via Mongoose. Le design responsive, réalisé avec Tailwind CSS, garantit une accessibilité parfaite sur tous supports.',
-    technologie : 'React JS, Node.js, MongoDB, Express, Tailwind CSS, JWT',
-    dateDebut   : '2024-02-01',
-    dateFin     : '',
+    description : 'Déploiement d\'une application Full Stack complète sur Debian avec supervision intégrée.\n\n• Stack applicative : React (Frontend), Node.js/Express (Backend), MongoDB — conteneurisée avec Docker Compose. Reverse proxy Nginx pour le routage et la terminaison SSL.\n\n• Supervision Prometheus/Grafana : Node Exporter, cAdvisor, Alertmanager. Dashboards temps réel (CPU, RAM, réseau, I/O). Règles d\'alerte (CPU > 80%, mémoire > 85%).\n\n• Sécurité Linux : Durcissement Debian — désactivation services inutiles, iptables, fail2ban, audit permissions selon CIS Benchmark.',
+    technologie : 'Docker Compose, Nginx, Prometheus, Grafana, Alertmanager, Debian, Node Exporter, cAdvisor',
+    dateDebut   : '2026-02-01',
+    dateFin     : '2026-07-01',
     categorie   : 'ODC',
-    statut      : 'En cours'
+    statut      : 'Terminé'
   },
-  {
-    libelle     : 'Infrastructure as Code (IaC) : Automatisation AWS',
-    image       : 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop',
-    description : 'Révolutionner le déploiement d\'infrastructure par l\'automatisation. Utilisation de Terraform pour définir et provisionner l\'ensemble des ressources Cloud sur AWS de manière reproductible. Création d\'un VPC sécurisé, de sous-réseaux isolés, de passerelles Internet et d\'instances EC2 configurées pour la haute disponibilité.',
-    technologie : 'Terraform, AWS (VPC, EC2, IAM), Cloud Automation',
-    dateDebut   : '2024-04-01',
-    dateFin     : '',
-    categorie   : 'ODC',
-    statut      : 'En cours'
-  },
+
   {
     libelle     : 'Orchestration de Conteneurs : Docker & Kubernetes (EKS)',
     image       : 'https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=400&auto=format&fit=crop',
-    description : 'Modernisation applicative via la conteneurisation. Création d\'images Docker optimisées pour les différents services du portfolio, utilisant des builds multi-étapes pour réduire la surface d\'attaque et la taille des images. Orchestration du déploiement sur Amazon EKS (Kubernetes).',
-    technologie : 'Docker, Kubernetes (K8s), Amazon EKS, Cloud Native',
-    dateDebut   : '2024-04-16',
-    dateFin     : '',
+    description : 'Modernisation applicative via la conteneurisation et l\'orchestration Cloud Native.\n\n• Images Docker optimisées : Builds multi-étapes pour Frontend (React) et Backend (Node.js). Réduction de la taille des images de 60%, minimisation de la surface d\'attaque.\n\n• Docker Compose : Orchestration locale avec réseaux isolés, volumes persistants et variables d\'environnement sécurisées.\n\n• Amazon EKS : Déploiement Kubernetes managé AWS — namespaces, services ClusterIP/LoadBalancer, Deployments avec readiness/liveness probes et autoscaling horizontal (HPA).',
+    technologie : 'Docker, Docker Compose, Kubernetes (K8s), Amazon EKS, Multi-stage builds, Cloud Native',
+    dateDebut   : '2026-04-16',
+    dateFin     : '2026-05-30',
     categorie   : 'ODC',
-    statut      : 'En cours'
+    statut      : 'Terminé'
   },
+
   {
-    libelle     : 'Chaîne CI/CD Intégrée : Jenkins & SonarQube',
-    image       : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400&auto=format&fit=crop',
-    description : 'Sécurisation et accélération du cycle de livraison logiciel. Mise en place d\'un serveur Jenkins automatisant l\'intégralité du workflow : du push de code sur GitHub au déploiement en production. Intégration de SonarQube pour l\'analyse continue de la qualité du code.',
-    technologie : 'Jenkins Pipelines, SonarQube, GitHub Webhooks, DevSecOps',
-    dateDebut   : '2024-04-01',
-    dateFin     : '',
+    libelle     : 'Automatisation d\'Infrastructure (IaC & CI/CD)',
+    image       : 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop',
+    description : 'Automatisation complète du déploiement infrastructure et du cycle de livraison logiciel.\n\n• Terraform (IaC) : Provisionnement AWS reproductible — VPC (sous-réseaux publics/privés, Internet Gateway), EC2 avec groupes de sécurité et rôles IAM, S3 avec versioning et chiffrement SSE. Scripts Bash d\'administration post-déploiement.\n\n• Jenkins CI/CD : Pipeline end-to-end automatisant Git push → Build → Tests → Analyse → Déploiement. Webhooks GitHub pour déclencher les builds à chaque commit.\n\n• SonarQube : Quality Gate bloquant les déploiements non conformes — code smells, vulnérabilités, coverage.',
+    technologie : 'Terraform, Jenkins, SonarQube, AWS (VPC, EC2, S3), Bash',
+    dateDebut   : '2026-04-01',
+    dateFin     : '2026-06-15',
     categorie   : 'ODC',
-    statut      : 'En cours'
+    statut      : 'Terminé'
   },
-  {
-    libelle     : 'Observabilité Avancée : Prometheus & Grafana',
-    image       : 'https://images.unsplash.com/photo-1551288049-bbbda5366fd9?q=80&w=400&auto=format&fit=crop',
-    description : 'Maîtrise de la santé des systèmes en temps réel. Déploiement d\'une pile de monitoring complète pour surveiller l\'infrastructure Cloud et les performances applicatives. Configuration de Prometheus pour l\'ingestion des métriques et création de dashboards Grafana.',
-    technologie : 'Prometheus, Grafana, Alerting, Monitoring',
-    dateDebut   : '2024-05-01',
-    dateFin     : '',
-    categorie   : 'ODC',
-    statut      : 'En cours'
-  },
-  {
-    libelle     : 'Ingénierie DevOps Assistée par IA',
-    image       : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=400&auto=format&fit=crop',
-    description : 'Optimisation des cycles de vie applicatifs via l\'Intelligence Artificielle. Utilisation du Prompt Engineering pour la génération de scripts Terraform et de pipelines Jenkins. Mise en place de stratégies AIOps pour l\'analyse prédictive.',
-    technologie : 'Generative AI, Prompt Engineering, AIOps, GitHub Copilot',
-    dateDebut   : '2024-05-15',
-    dateFin     : '',
-    categorie   : 'ODC',
-    statut      : 'En cours'
-  },
+
   {
     libelle     : 'Audit de Sécurité Automatisé avec Trivy',
     image       : 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=400&auto=format&fit=crop',
-    description : 'Renforcement de la posture de sécurité Cloud. Utilisation de Trivy pour réaliser des scans de vulnérabilités profonds sur les images de conteneurs et les configurations IaC (Terraform). Identification proactive des failles de sécurité.',
-    technologie : 'Trivy, Security Auditing, Docker Security, IaC Scan',
-    dateDebut   : '2024-05-16',
-    dateFin     : '',
+    description : 'Renforcement de la posture de sécurité Cloud par l\'automatisation des audits de vulnérabilités.\n\n• Trivy multi-cibles : Images Docker (OS packages, librairies, secrets exposés), fichiers IaC Terraform (misconfigurations CIS), dépendances Node.js et Python.\n\n• Intégration CI/CD : Étape bloquante dans Jenkins — arrêt automatique si CVE CRITICAL ou HIGH détectées. Rapports JSON/SARIF archivés.\n\n• Durcissement Linux : CIS Benchmark — PAM, iptables, fail2ban, audit permissions.\n\n• Documentation : score de risque, CVE identifiées, CVSS scores, plan de remédiation priorisé.',
+    technologie : 'Trivy, Docker Security, IaC Scan, Jenkins, DevSecOps, CIS Benchmark',
+    dateDebut   : '2026-05-16',
+    dateFin     : '2026-07-01',
     categorie   : 'ODC',
-    statut      : 'En cours'
+    statut      : 'Terminé'
   },
-  // --- PROJETS ISI --- (2 Projets "Terminé")
+
   {
-    libelle     : 'OpenLDAP : Gouvernance des Identités & Accès',
-    image       : 'https://images.unsplash.com/photo-1558494949-ef010cbdcc48?q=80&w=400&auto=format&fit=crop',
-    description : 'Centralisation et sécurisation de l\'annuaire d\'entreprise. Mise en œuvre d\'un serveur OpenLDAP sous Linux pour la gestion unifiée des utilisateurs et des ressources. Configuration des schémas personnalisés, structuration en Unités Organisationnelles (OU) et mise en place d\'ACL strictes.',
-    technologie : 'OpenLDAP, Linux Administration, Directory Services',
-    dateDebut   : '2023-11-01',
-    dateFin     : '2023-11-30',
+    libelle     : 'Application Web Full Stack MERN — Portfolio',
+    image       : 'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=400&auto=format&fit=crop',
+    description : 'Conception et développement intégral d\'une plateforme web dynamique de gestion de carrière.\n\n• Backend API REST : Node.js/Express sécurisée par JWT et CORS. Persistance MongoDB avec Mongoose (projets, certifications, messages, utilisateurs). CRUD complet avec validation des données.\n\n• Frontend React : Interface responsive avec React Hooks, React Router SPA, dashboard admin protégé par rôles. Design Tailwind CSS mobile-first.\n\n• Fonctionnalités : CRUD projets/certifications, formulaire de contact avec stockage en base, affichage dynamique du portfolio, page CV avec export PDF.',
+    technologie : 'MongoDB, Express.js, React.js, Node.js, JWT, Tailwind CSS, API REST, Mongoose',
+    dateDebut   : '2026-02-01',
+    dateFin     : '2026-07-01',
+    categorie   : 'ODC',
+    statut      : 'Terminé'
+  },
+
+  // ════════════════════════════════════════════
+  // ISI — Institut Supérieur d'Informatique  (4 projets)
+  // ════════════════════════════════════════════
+
+  {
+    libelle     : 'Intégration de l\'IA pour la Gestion Réseau (AIOps)',
+    image       : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=400&auto=format&fit=crop',
+    description : 'Mémoire de Licence — Solution AIOps complète : provisionnement cloud → conteneurisation → supervision → IA → détection → alertes → rapports.\n\n• Infrastructure AWS : VPC, EC2 t2.micro Rocky Linux via Terraform (provider.tf, variables.tf, network.tf, security.tf, ec2.tf).\n\n• Docker Compose : 7 services — Prometheus, Grafana, Alertmanager, Node Exporter, SNMP Exporter, Pushgateway, Module IA Python.\n\n• Supervision : scraping 15s, 4 règles d\'alerte (CPU > 80%, mémoire > 85%, trafic > 10 Mo/s, anomaly_score > 0.5).\n\n• Module IA Python : Isolation Forest (100 estimateurs, contamination 5%), évaluation toutes les 60s, webhook Flask.\n\n• Résultats : 70 analyses, 17 anomalies — Précision 92,31% | F1-score 72,73% | Détection en 0,1425s (vs 135s traditionnel).',
+    technologie : 'AWS, Terraform, Docker Compose, Rocky Linux, Prometheus, Grafana, Alertmanager, SNMP, Python, Scikit-learn, Isolation Forest, Flask, Pandas, NumPy',
+    dateDebut   : '2025-09-01',
+    dateFin     : '2026-06-30',
     categorie   : 'ISI',
     statut      : 'Terminé'
   },
+
   {
-    libelle     : 'Microsoft Exchange : Communication Unifiée',
-    image       : 'https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=400&auto=format&fit=crop',
-    description : 'Déploiement d\'une solution de messagerie collaborative de classe mondiale. Installation et configuration fine de Microsoft Exchange Server en environnement Active Directory. Gestion des boîtes aux lettres, des groupes de distribution.',
-    technologie : 'Exchange Server, Windows Server, Active Directory, SSL',
-    dateDebut   : '2023-12-01',
-    dateFin     : '2023-12-20',
+    libelle     : 'Gouvernance des Identités, Services Réseau & Messagerie',
+    image       : 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=400&auto=format&fit=crop',
+    description : 'Gouvernance des identités et infrastructure réseau complète en environnement d\'entreprise.\n\n• OpenLDAP & Active Directory : schémas personnalisés, Unités Organisationnelles (OU), ACL strictes. GPO — déploiement logiciels, restrictions accès, politique mots de passe.\n\n• Services réseau Windows Server : DNS (zones directes/inverses) et DHCP (pools, réservations, relais inter-VLAN).\n\n• Infrastructure Cisco : segmentation multi-VLAN (Admin/Users/Serveurs), routage inter-VLAN router-on-a-stick, trunk/access sur switches Catalyst.\n\n• Exchange Server : installation, boîtes aux lettres, groupes de distribution, connecteurs SMTP, certificat SSL.',
+    technologie : 'OpenLDAP, Active Directory, GPO, DNS/DHCP, Cisco IOS, VLAN, Exchange Server, Windows Server, SSL',
+    dateDebut   : '2023-11-01',
+    dateFin     : '2024-01-31',
+    categorie   : 'ISI',
+    statut      : 'Terminé'
+  },
+
+  {
+    libelle     : 'Détection d\'Intrusion avec Wazuh & Intégration API CriminalIP',
+    image       : 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=400&auto=format&fit=crop',
+    description : 'Infrastructure de détection d\'intrusion, gestion des journaux et surveillance de conformité — projet individuel ISI 2025-2026.\n\n• Environnement : Ubuntu sur machine virtuelle, installation et configuration de Wazuh (SIEM/XDR) avec Elastic Stack. Déploiement d\'un agent Wazuh sur poste Windows via PowerShell.\n\n• Intégration CriminalIP : développement d\'un script Python personnalisé interrogeant l\'API CriminalIP pour enrichir les alertes Wazuh avec le score de réputation des adresses IP. Configuration dans ossec.conf, wrapper shell, gestion des permissions.\n\n• Détection : génération d\'événements réels (tentatives SSH), règles de détection personnalisées (règle 100200), visualisation dans le dashboard Wazuh Discover.\n\n• Résultat : détection automatique des IP malveillantes avec enrichissement threat intelligence en temps réel. 57 captures d\'écran documentant chaque étape.',
+    technologie : 'Wazuh, Elastic Stack, CriminalIP API, Python, Ubuntu, Windows Server, SSH, Threat Intelligence, SIEM, XDR',
+    dateDebut   : '2025-09-01',
+    dateFin     : '2026-06-30',
+    categorie   : 'ISI',
+    statut      : 'Terminé'
+  },
+
+  {
+    libelle     : 'Contrôle d\'Accès Réseau & Supervision : OPNsense, AD, Zenarmor & Graylog',
+    image       : 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400&auto=format&fit=crop',
+    description : 'Projet de groupe (Licence 3 ASR) — Infrastructure réseau complète de contrôle d\'accès et supervision des activités utilisateurs.\n\n• Hyperviseur Proxmox VE 9.1 : virtualisation de toute l\'infrastructure (OPNsense, Windows Server, clients Windows et Ubuntu) sur un environnement centralisé.\n\n• OPNsense + Active Directory via LDAP : authentification des utilisateurs du domaine sur le pare-feu, politiques de filtrage différenciées par groupe AD. Portail captif, règles par groupe.\n\n• Zenarmor (inspection applicative) : identification en temps réel des sites visités, applications utilisées et bande passante consommée par utilisateur.\n\n• Active Directory : création des groupes de sécurité, utilisateurs, compte de service svc_ldap, promotion du serveur en contrôleur de domaine.\n\n• Graylog : centralisation de tous les logs pour l\'analyse et l\'audit. Serveur NTP pour la cohérence des horodatages.',
+    technologie : 'Proxmox VE, OPNsense, Active Directory, LDAP, Zenarmor, Graylog, Windows Server, NTP, Pare-feu, Virtualisation',
+    dateDebut   : '2025-09-01',
+    dateFin     : '2026-06-30',
     categorie   : 'ISI',
     statut      : 'Terminé'
   }
+
 ];
 
 const certificationsDemo = [
@@ -110,31 +126,39 @@ const certificationsDemo = [
     organisation : 'Amazon Web Services',
     statut       : 'Terminé',
     image        : '☁️',
-    dateObtention: '2024-01-15',
-    lien         : 'https://aws.amazon.com/'
+    dateObtention: '2026',
+    lien         : 'https://aws.amazon.com/certification/certified-cloud-practitioner/'
   },
   {
-    libelle      : 'CCNA 1 : Networking Basics',
+    libelle      : 'CCNA 1 : Introduction to Networks',
     organisation : 'Cisco Networking Academy',
     statut       : 'Terminé',
-    image        : '🛰️',
-    dateObtention: '2023-06-10',
+    image        : '🌐',
+    dateObtention: '2026',
     lien         : 'https://www.netacad.com/'
   },
   {
-    libelle      : 'CCNA 2 : Switching & Routing',
+    libelle      : 'CCNA 2 : Switching, Routing & Wireless',
     organisation : 'Cisco Networking Academy',
-    statut       : 'En cours',
-    image        : '🛣️',
-    dateObtention: '',
-    lien         : ''
+    statut       : 'Terminé',
+    image        : '🔀',
+    dateObtention: '2026',
+    lien         : 'https://www.netacad.com/'
+  },
+  {
+    libelle      : 'CCNA 3 : Enterprise Networking, Security & Automation',
+    organisation : 'Cisco Networking Academy',
+    statut       : 'Terminé',
+    image        : '🛡️',
+    dateObtention: '2026',
+    lien         : 'https://www.netacad.com/'
   },
   {
     libelle      : 'Linux Essentials',
     organisation : 'NDG / LPI',
     statut       : 'Terminé',
     image        : '🐧',
-    dateObtention: '2023-09-05',
+    dateObtention: '2026',
     lien         : 'https://www.lpi.org/'
   }
 ];
@@ -144,40 +168,29 @@ const seedDB = async () => {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('🚀 Connexion à MongoDB pour le seeding...');
 
-    // Nettoyer la base existante
     const deletedProjects = await Projet.deleteMany({});
-    console.log(`🧹 Base de données nettoyée (${deletedProjects.deletedCount} projets supprimés).`);
-    
-    const deletedCerts = await Certification.deleteMany({});
-    console.log(`🧹 Base de données nettoyée (${deletedCerts.deletedCount} certifications supprimées).`);
+    console.log(`🧹 ${deletedProjects.deletedCount} projets supprimés.`);
 
-    // Vider aussi les users pour être propre
+    const deletedCerts = await Certification.deleteMany({});
+    console.log(`🧹 ${deletedCerts.deletedCount} certifications supprimées.`);
+
     await User.deleteMany({});
 
-    // Insérer les projets
     const insertedProjects = await Projet.insertMany(projetsDemo);
-    console.log(`✅ ${insertedProjects.length} nouveaux projets ajoutés !`);
-    
-    // Insérer les certifications
+    console.log(`✅ ${insertedProjects.length} projets ajoutés !`);
+
     const insertedCerts = await Certification.insertMany(certificationsDemo);
-    console.log(`✅ ${insertedCerts.length} nouvelles certifications ajoutées !`);
+    console.log(`✅ ${insertedCerts.length} certifications ajoutées !`);
 
-    // Vérification immédiate
-    const countProjects = await Projet.countDocuments();
-    const countCerts = await Certification.countDocuments();
-    console.log(`📊 Nombre total de projets en base maintenant : ${countProjects}`);
-    console.log(`📊 Nombre total de certifications en base maintenant : ${countCerts}`);
+    console.log(`📊 Projets en base : ${await Projet.countDocuments()}`);
+    console.log(`📊 Certifications en base : ${await Certification.countDocuments()}`);
 
-    // Créer un utilisateur Admin
-    await User.create({
-      email    : 'soxnanna@gmail.com',
-      password : 'Passer@1'
-    });
-    console.log('👤 Utilisateur Admin créé : soxnanna@gmail.com / Passer@1');
+    await User.create({ email: 'soxnanna@gmail.com', password: 'Passer@1' });
+    console.log('👤 Admin créé : soxnanna@gmail.com / Passer@1');
 
     process.exit();
   } catch (error) {
-    console.error('❌ Erreur lors du seeding :', error);
+    console.error('❌ Erreur :', error);
     process.exit(1);
   }
 };
