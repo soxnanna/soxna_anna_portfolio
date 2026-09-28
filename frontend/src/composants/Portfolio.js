@@ -4,7 +4,7 @@ import Projet from './Projet';
 import StatsPanel from './StatsPanel';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/projets';
+const API_URL = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/projets` : 'http://localhost:5000/projets';
 
 function Portfolio() {
   const [projets, setProjets] = useState([]);

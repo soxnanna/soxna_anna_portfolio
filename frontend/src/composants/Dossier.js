@@ -5,7 +5,7 @@ import Projet from './Projet';
 import AjouterProjet from './AjouterProjet';
 import DetaillerProjet from './DetaillerProjet';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/projets';
+const API_URL = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/projets` : 'http://localhost:5000/projets';
 
 function Dossier() {
   const [projets, setProjets] = useState([]);
@@ -65,8 +65,8 @@ function Dossier() {
 
   const chargerCertifications = async () => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      const reponse = await axios.get(`${apiUrl}/certifications`);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/certifications` : 'http://localhost:5000/certifications';
+      const reponse = await axios.get(apiUrl);
       setCertifications(reponse.data);
     } catch (erreur) {
       console.error('Erreur certs:', erreur);
@@ -77,8 +77,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      const reponse = await axios.get(`${apiUrl}/messages`, config);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/messages` : 'http://localhost:5000/messages';
+      const reponse = await axios.get(apiUrl, config);
       setMessages(reponse.data);
     } catch (erreur) {
       console.error('Erreur messages:', erreur);
@@ -128,8 +128,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      const reponse = await axios.post(`${apiUrl}/certifications`, nouvelleCert, config);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/certifications` : 'http://localhost:5000/certifications';
+      const reponse = await axios.post(apiUrl, nouvelleCert, config);
       setCertifications([...certifications, reponse.data]);
     } catch (erreur) {
       console.error('Erreur ajout certification:', erreur);
@@ -141,8 +141,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      await axios.delete(`${apiUrl}/certifications/${id}`, config);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/certifications` : 'http://localhost:5000/certifications';
+      await axios.delete(`${apiUrl}/${id}`, config);
       setCertifications(certifications.filter(c => c._id !== id));
       if (certSelectionne && certSelectionne._id === id) {
         setCertSelectionne(null);
@@ -156,8 +156,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      const reponse = await axios.put(`${apiUrl}/certifications/${certModifiee._id}`, certModifiee, config);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/certifications` : 'http://localhost:5000/certifications';
+      const reponse = await axios.put(`${apiUrl}/${certModifiee._id}`, certModifiee, config);
       setCertifications(certifications.map(c => c._id === certModifiee._id ? reponse.data : c));
       setCertSelectionne(reponse.data);
       setCertAEditer(null);

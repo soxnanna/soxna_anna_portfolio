@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Projet from './Projet';
 import StatsPanel from './StatsPanel';
 
-const API_URL       = process.env.REACT_APP_API_URL || 'http://localhost:5000/projets';
+const API_URL       = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/projets` : 'http://localhost:5000/projets';
 const CERTS_API_URL = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/certifications` : 'http://localhost:5000/certifications';
 
 /* ── Icône LinkedIn SVG inline ── */

@@ -16,8 +16,8 @@ function Contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      await axios.post(`${apiUrl}/messages`, form);
+      const apiUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/messages` : 'http://localhost:5000/messages';
+      await axios.post(apiUrl, form);
       setStatus('SUCCESS');
       setForm({ nom: '', email: '', objet: '', message: '' });
     } catch (err) {
