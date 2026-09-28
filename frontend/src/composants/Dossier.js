@@ -5,7 +5,7 @@ import Projet from './Projet';
 import AjouterProjet from './AjouterProjet';
 import DetaillerProjet from './DetaillerProjet';
 
-const API_URL = 'http://localhost:5000/projets';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/projets';
 
 function Dossier() {
   const [projets, setProjets] = useState([]);
@@ -40,7 +40,7 @@ function Dossier() {
       chargerCertifications();
       chargerMessages();
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (id && projets.length > 0) {
@@ -65,7 +65,8 @@ function Dossier() {
 
   const chargerCertifications = async () => {
     try {
-      const reponse = await axios.get('http://localhost:5000/certifications');
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const reponse = await axios.get(`${apiUrl}/certifications`);
       setCertifications(reponse.data);
     } catch (erreur) {
       console.error('Erreur certs:', erreur);
@@ -76,7 +77,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const reponse = await axios.get('http://localhost:5000/messages', config);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const reponse = await axios.get(`${apiUrl}/messages`, config);
       setMessages(reponse.data);
     } catch (erreur) {
       console.error('Erreur messages:', erreur);
@@ -126,7 +128,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const reponse = await axios.post('http://localhost:5000/certifications', nouvelleCert, config);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const reponse = await axios.post(`${apiUrl}/certifications`, nouvelleCert, config);
       setCertifications([...certifications, reponse.data]);
     } catch (erreur) {
       console.error('Erreur ajout certification:', erreur);
@@ -138,7 +141,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      await axios.delete(`http://localhost:5000/certifications/${id}`, config);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      await axios.delete(`${apiUrl}/certifications/${id}`, config);
       setCertifications(certifications.filter(c => c._id !== id));
       if (certSelectionne && certSelectionne._id === id) {
         setCertSelectionne(null);
@@ -152,7 +156,8 @@ function Dossier() {
     try {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-      const reponse = await axios.put(`http://localhost:5000/certifications/${certModifiee._id}`, certModifiee, config);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const reponse = await axios.put(`${apiUrl}/certifications/${certModifiee._id}`, certModifiee, config);
       setCertifications(certifications.map(c => c._id === certModifiee._id ? reponse.data : c));
       setCertSelectionne(reponse.data);
       setCertAEditer(null);
