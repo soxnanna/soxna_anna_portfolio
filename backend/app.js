@@ -22,16 +22,17 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://soxna-anna-portfolio-lilac.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-/* ── Route santé ── */
+/* ── Route santé (pour Render) ── */
 app.get('/', (req, res) => {
   res.json({
     message : '🚀 API Portfolio opérationnelle',
     version : '1.0.0',
+    status  : 'healthy',
     routes  : {
       'GET    /projets'     : 'Tous les projets',
       'POST   /projets'     : 'Ajouter un projet (Protégé)',
@@ -41,6 +42,11 @@ app.get('/', (req, res) => {
       'POST   /auth/login'  : 'Se connecter',
     },
   });
+});
+
+/* ── Health check endpoint pour Render ── */
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
 });
 
 /* ── Routes ── */
