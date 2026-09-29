@@ -3,25 +3,10 @@
    ============================================== */
 
 const Message    = require('../models/messageModel');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// Configuration du transporteur d'email (SMTP)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-// Vérifier la connexion SMTP au démarrage
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Erreur configuration Email:', error);
-  } else {
-    console.log('📧 Serveur prêt à envoyer des emails !');
-  }
-});
+// Configuration Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // @desc    Envoyer un message
 // @route   POST /messages
@@ -33,17 +18,21 @@ const envoyerMessage = async (req, res) => {
       nom, email, objet, message
     });
 
-    // Envoi de l'email de notification à l'admin
-    const mailOptions = {
-      from    : process.env.EMAIL_USER,
-      to      : 'soxnanna@gmail.com',
-      subject : `[Portfolio] Nouveau message : ${objet}`,
-      text    : `Vous avez reçu un nouveau message de ${nom} (${email}) :\n\n${message}`,
-    };
-
+    // Envoi de l'email de notification à l'admin via Resend
     try {
-      await transporter.sendMail(mailOptions);
-      console.log('📧 Email envoyé avec succès !');
+      await resend.emails.send({
+        from: 'portfolio@resend.dev',
+        to: 'soxnanna@gmail.com',
+        subject: `[Portfolio] Nouveau message : ${objet}`,
+        html: `
+          <h2>Nouveau message de portfolio</h2>
+          <p><strong>De:</strong> ${nom} (${email})</p>
+          <p><strong>Objet:</strong> ${objet}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        `
+      });
+      console.log('📧 Email envoyé avec succès via Resend !');
     } catch (mailError) {
       console.error('❌ Erreur technique lors de l\'envoi de l\'email:', mailError);
       // On ne bloque pas la réponse client car le message est déjà en base
